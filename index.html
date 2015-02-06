@@ -5,24 +5,22 @@
     
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
-    <!-- <link rel="stylesheet" type="text/css" href="/style/epoch.min.css"> -->
+    
+    <p style="font-size:3em;" id="homesSold_dollars"></p>
+
+    <link rel="stylesheet" type="text/css" href="style/epoch.min.css">
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <!-- <script src="/epoch.min.js"></script> -->
+    <script src="scripts/d3.v3.min.js"></script>
+    <script src="scripts/epoch.min.js"></script>
     <script>
+
       var socket = io();
-      $('form').submit(function(){
-        socket.emit('update', $('#m').val());
-        $('#m').val('');
-        return false;
-      });
+  
       socket.on('update', function(data){
-        $('#messages').append($('<li>').text(data));
+        $('#homesSold_dollars').text(data);
       });
+
     </script>
   </body>
 </html>
