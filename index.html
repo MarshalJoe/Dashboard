@@ -5,8 +5,8 @@
     
   </head>
   <body>
-    
-    <p style="font-size:3em;" id="homes-total"></p>
+    <p style="font-size:3em;" id="homes-sold-number"></p>
+    <p style="font-size:3em;" id="homes-sold-dollar"></p>
     <div id="realtime-chart" class="epoch" style="height: 200px"></div>
 
     <link rel="stylesheet" type="text/css" href="style/epoch.css">
@@ -19,9 +19,9 @@
 
       var socket = io();
   
-      socket.on('update', function(time){
-
-        $("#homes-total").text(time);
+      socket.on('update', function(info){
+        $("#homes-sold-number").text(info.homesSold + " homes sold");
+        $("#homes-sold-dollar").text("$" + info.sum);
 
         var data = new RealTimeData(1);
 
@@ -31,7 +31,7 @@
             axes: ['left', 'bottom', 'right']
         });
 
-        chart.push(data.next(time));
+        chart.push(data.next(info.sum));
 
       });
 

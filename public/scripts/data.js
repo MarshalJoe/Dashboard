@@ -11,10 +11,6 @@
         this.timestamp = ((new Date()).getTime() / 1000)|0;
     };
 
-    RealTimeData.prototype.rand = function() {
-        return parseInt(Math.random() * 100) + 50;
-    };
-
     RealTimeData.prototype.history = function(entries) {
         if (typeof(entries) != 'number' || !entries) {
             entries = 100;
