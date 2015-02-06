@@ -19,7 +19,7 @@ io.on('connection', function(socket) {
 	}
 
 
-	setInterval(updateStats, 3000);
+	setInterval(updateStats, 1000);
 
 });
 

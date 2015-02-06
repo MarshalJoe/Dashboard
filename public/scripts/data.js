@@ -17,7 +17,7 @@
 
     RealTimeData.prototype.history = function(entries) {
         if (typeof(entries) != 'number' || !entries) {
-            entries = 60;
+            entries = 100;
         }
 
         var history = [];
@@ -35,10 +35,10 @@
         return history;
     };
 
-    RealTimeData.prototype.next = function() {
+    RealTimeData.prototype.next = function(value) {
         var entry = [];
         for (var i = 0; i < this.layers; i++) {
-            entry.push({ time: this.timestamp, y: this.rand() });
+            entry.push({ time: this.timestamp, y: value });
         }
         this.timestamp++;
         return entry;
