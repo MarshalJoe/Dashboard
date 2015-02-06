@@ -1,18 +1,20 @@
 <!doctype html>
 <html>
   <head>
-    <title>MLS Stats Dashboard</title>
+    <title>Dashboard</title>
     
   </head>
   <body>
     
     <p style="font-size:3em;" id="homesSold_dollars"></p>
+    <div id="real-time-bar" class="epoch" style="height: 200px"></div>
 
-    <link rel="stylesheet" type="text/css" href="style/epoch.min.css">
+    <link rel="stylesheet" type="text/css" href="style/epoch.css">
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="scripts/d3.v3.min.js"></script>
-    <script src="scripts/epoch.min.js"></script>
+    <script src="scripts/d3.js"></script>
+    <script src="scripts/epoch.js"></script>
+    <script src="scripts/data.js"></script>
     <script>
 
       var socket = io();
@@ -20,6 +22,20 @@
       socket.on('update', function(data){
         $('#homesSold_dollars').text(data);
       });
+
+      $(function() {
+          var data = new RealTimeData(3);
+
+          var chart = $('#real-time-bar').epoch({
+              type: 'time.bar',
+              data: data.history(),
+              axes: ['left', 'bottom', 'right']
+          });
+
+          setInterval(function() { chart.push(data.next()); }, 1000);
+          chart.push(data.next());
+      });
+
 
     </script>
   </body>
