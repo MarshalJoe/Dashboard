@@ -12,8 +12,10 @@ app.get('/', function(req, res){
 io.on('connection', function(socket) {
 
 	function updateStats () {
-		var data = new Date().getTime(); 
-		io.emit('update', data);
+		
+		var time = new Date().getTime();
+		io.emit('update', time);
+
 	}
 
 

@@ -6,8 +6,8 @@
   </head>
   <body>
     
-    <p style="font-size:3em;" id="homesSold_dollars"></p>
-    <div id="real-time-bar" class="epoch" style="height: 200px"></div>
+    <p style="font-size:3em;" id="homes-total"></p>
+    <div id="realtime-chart" class="epoch" style="height: 200px"></div>
 
     <link rel="stylesheet" type="text/css" href="style/epoch.css">
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
@@ -19,22 +19,22 @@
 
       var socket = io();
   
-      socket.on('update', function(data){
-        $('#homesSold_dollars').text(data);
+      socket.on('update', function(time){
+
+        $("#homes-total").text(time);
+
+        var data = new RealTimeData(1);
+
+        var chart = $('#realtime-chart').epoch({
+            type: 'time.area',
+            data: data.history(),
+            axes: ['left', 'bottom', 'right']
+        });
+
+        chart.push(data.next());
+
       });
 
-      $(function() {
-          var data = new RealTimeData(3);
-
-          var chart = $('#real-time-bar').epoch({
-              type: 'time.bar',
-              data: data.history(),
-              axes: ['left', 'bottom', 'right']
-          });
-
-          setInterval(function() { chart.push(data.next()); }, 1000);
-          chart.push(data.next());
-      });
 
 
     </script>
