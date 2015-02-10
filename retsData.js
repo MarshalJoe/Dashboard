@@ -28,17 +28,13 @@ module.exports = {
         }
 
         var retsDate = year + '-' + month + '-' + day
-        console.log(retsDate);
 
         // ... and a Twitter-friendly one.
         var twitterDate = month + '/' + day + '/' + year;
-        console.log(twitterDate);
 
         // On successful RETS connection...
         client.once('connection.success', function() {
-            console.log("Connected to RETS server");
-            console.log("RETS version: " + client.retsVersion);
-
+            console.log("Pulling data from RETS server...");
 
             // Get residential property fields 
             client.getTable("Property", "RESI");

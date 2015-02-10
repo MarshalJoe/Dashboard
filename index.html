@@ -17,23 +17,30 @@
     <script src="scripts/data.js"></script>
     <script>
 
+      // script globals
       var socket = io();
-  
+      var data = new RealTimeData(1);
+      var chart = $('#realtime-chart').epoch({
+        type: 'time.area',
+        data: data.history(),
+        axes: ['left', 'bottom', 'right']
+      });
+
+      // push updated RETS data through socket.io
       socket.on('update', function(info){
         $("#homes-sold-number").text(info.homesSold + " homes sold");
         $("#homes-sold-dollar").text("$" + info.sum);
 
-        var data = new RealTimeData(1);
-
-        var chart = $('#realtime-chart').epoch({
-            type: 'time.area',
-            data: data.history(),
-            axes: ['left', 'bottom', 'right']
-        });
-
         chart.push(data.next(info.sum));
-
       });
+
+      function updateChart () {
+        console.log("Updating Chart");
+
+        chart.push(data.next(100));
+      }
+
+      setInterval(updateChart, 1000);
 
 
 

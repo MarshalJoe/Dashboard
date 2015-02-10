@@ -11,17 +11,14 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket) {
-
-	function updateStats () {
-		
-		RETS.pullData(io);
-
-	}
-
-
-	setInterval(updateStats, 1000);
-
+	console.log("User connected!");
 });
+
+function updateStats () {
+	RETS.pullData(io);
+}
+
+setInterval(updateStats, 5000);
 
 http.listen(3000, function(){
 	console.log('listening on port 3000');
