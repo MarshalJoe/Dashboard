@@ -28,16 +28,18 @@
 
       // push updated RETS data through socket.io
       socket.on('update', function(info){
-        $("#homes-sold-number").text(info.homesSold + " homes sold");
-        $("#homes-sold-dollar").text("$" + info.sum);
+        data.homeSum = info.sum;
 
-        chart.push(data.next(info.sum));
+        $("#homes-sold-number").text(info.homesSold + " homes sold");
+        $("#homes-sold-dollar").text("$" + data.homeSum);
+
+        chart.push(data.next(data.homeSum));
       });
 
       function updateChart () {
         console.log("Updating Chart");
 
-        chart.push(data.next(100));
+        chart.push(data.next(data.homeSum));
       }
 
       setInterval(updateChart, 1000);

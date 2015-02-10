@@ -9,6 +9,7 @@
     var RealTimeData = function(layers) {
         this.layers = layers;
         this.timestamp = ((new Date()).getTime() / 1000)|0;
+        this.homesSold = 0;
     };
 
     RealTimeData.prototype.history = function(entries) {

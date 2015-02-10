@@ -15,7 +15,7 @@ io.on('connection', function(socket) {
 });
 
 function updateStats () {
-	RETS.pullData(io);
+	RETS.sendData(io);
 }
 
 setInterval(updateStats, 5000);

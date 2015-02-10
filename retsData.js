@@ -1,5 +1,5 @@
 module.exports = {
-    pullData: function (io) {
+    sendData: function (io) {
 
         // Include RETS credentials
         var retsKeys = require('./retsConfig.js')
