@@ -5,6 +5,7 @@
     
   </head>
   <body>
+    <div id="example"></div>
     <p style="font-size:3em;" id="homes-sold-number"></p>
     <p style="font-size:3em;" id="homes-sold-dollar"></p>
     <div id="realtime-chart" class="epoch" style="height: 200px"></div>
@@ -15,34 +16,61 @@
     <script src="scripts/d3.js"></script>
     <script src="scripts/epoch.js"></script>
     <script src="scripts/data.js"></script>
+    <script src="http://fb.me/react-0.12.2.js"></script>
+    <script src="http://fb.me/JSXTransformer-0.12.2.js"></script>
+
+    <script type="text/jsx">
+      
+      var Timer = React.createClass({
+        getInitialState: function() {
+          return {secondsElapsed: 0};
+        },
+        tick: function() {
+          this.setState({secondsElapsed: this.state.secondsElapsed + 1});
+        },
+        componentDidMount: function() {
+          this.interval = setInterval(this.tick, 1000);
+        },
+        componentWillUnmount: function() {
+          clearInterval(this.interval);
+        },
+        render: function() {
+          return (
+            <div>Seconds Elapsed: {this.state.secondsElapsed}</div>
+          );
+        }
+      });
+
+      React.render(<Timer />, document.getElementById('example'));
+
+    </script>  
+
     <script>
 
       // script globals
-      var socket = io();
-      var data = new RealTimeData(1);
-      var chart = $('#realtime-chart').epoch({
-        type: 'time.area',
-        data: data.history(),
-        axes: ['left', 'bottom', 'right']
-      });
+      // var socket = io();
+      // var data = new RealTimeData(1);
+      // var chart = $('#realtime-chart').epoch({
+      //   type: 'time.area',
+      //   data: data.history(),
+      //   axes: ['left', 'bottom', 'right']
+      // });
 
-      // push updated RETS data through socket.io
-      socket.on('update', function(info){
-        data.homeSum = info.sum;
+      // // push updated RETS data through socket.io
+      // socket.on('update', function(info){
+      //   data.homeSum = info.sum;
 
-        $("#homes-sold-number").text(info.homesSold + " homes sold");
-        $("#homes-sold-dollar").text("$" + data.homeSum);
+      //   $("#homes-sold-number").text(info.homesSold + " homes sold");
+      //   $("#homes-sold-dollar").text("$" + data.homeSum);
 
-        chart.push(data.next(data.homeSum));
-      });
+      //   chart.push(data.next(data.homeSum));
+      // });
 
-      function updateChart () {
-        console.log("Updating Chart");
+      // function updateChart () {
+      //   chart.push(data.next(data.homeSum));
+      // }
 
-        chart.push(data.next(data.homeSum));
-      }
-
-      setInterval(updateChart, 1000);
+      // setInterval(updateChart, 1000);
 
 
 
