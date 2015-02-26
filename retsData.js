@@ -1,5 +1,5 @@
 module.exports = {
-    sendData: function (io) {
+    pullAndSendData: function (io) {
 
         // Include RETS credentials
         var retsKeys = require('./retsConfig.js')
@@ -7,34 +7,33 @@ module.exports = {
         // Create RETS client and connect
         var client = require('rets-client').getClient(retsKeys.loginURL, retsKeys.user, retsKeys.pass);
 
-        // Grab current date...
-        var rawDate = new Date;
-
-        // ... and parse into a RETS-friendly format...
-        var rawMonth = rawDate.getMonth() + 1;
-        var rawDay = rawDate.getDay() + 1;
-        var year = rawDate.getFullYear();
-
-        if (rawMonth < 10) {
-            var month = '0' + rawMonth;
-        } else {
-            var month = rawMonth;
-        }
-
-        if (rawDay < 10) {
-            var day = '0' + rawDay;
-        } else {
-            var day = rawDay;
-        }
-
-        var retsDate = year + '-' + month + '-' + day
-
-        // ... and a Twitter-friendly one.
-        var twitterDate = month + '/' + day + '/' + year;
-
         // On successful RETS connection...
         client.once('connection.success', function() {
             console.log("Pulling data from RETS server...");
+
+            // Grab current date...
+            var rawDate = new Date;
+
+            // ... and parse into a RETS-friendly format...
+            var rawMonth = rawDate.getMonth() + 1
+            var rawDay = rawDate.getDate();
+            var year = rawDate.getFullYear();
+            var month;
+            var day;
+
+            if (rawMonth < 10) {
+                month = '0' + rawMonth;
+            } else {
+                month = rawMonth;
+            }
+
+            if (rawDay < 10) {
+                day = '0' + rawDay;
+            } else {
+                day = rawDay;
+            }
+
+            var retsDate = year + '-' + month + '-' + day;
 
             // Get residential property fields 
             client.getTable("Property", "RESI");
@@ -73,7 +72,9 @@ module.exports = {
                     var data = {}
                     data.sum = sum;
                     data.homesSold = dailyHomesSold;
+                    data.date = retsDate;
 
+                    // broadcast it as a websocket 'update' event
                     io.emit('update', data);
                 });
 

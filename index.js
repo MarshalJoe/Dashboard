@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var RETS = require('./retsData.js')
+var rets = require('./retsData.js')
 
 app.use(express.static(__dirname + '/public'))
 
@@ -15,10 +15,10 @@ io.on('connection', function(socket) {
 });
 
 function updateStats () {
-	RETS.sendData(io);
+	rets.pullAndSendData(io);
 }
 
-setInterval(updateStats, 5000);
+setInterval(updateStats, 3000);
 
 http.listen(3000, function(){
 	console.log('listening on port 3000');
