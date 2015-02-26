@@ -22,6 +22,7 @@
     <script src="scripts/d3.js"></script>
     <script src="scripts/epoch.js"></script>
     <script src="scripts/data.js"></script>
+    <script src="scripts/jquery.animateNumber.js"></script>
 
     <script>
 
@@ -33,16 +34,23 @@
         data: data.history(),
         axes: ['left', 'bottom', 'right']
       });
+      var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',')
 
       // push updated RETS data through socket.io
       socket.on('update', function(info){
         data.homeSum = info.sum;
 
         $("#homes-sold-number").text(info.homesSold + " homes sold");
-        $("#homes-sold-dollar").text("$" + data.homeSum);
-        $("#date").text(info.date);
+                
+        $('#homes-sold-dollar').animateNumber(
+          {
+            number: data.homeSum,
+            numberStep: comma_separator_number_step
+          }
+        );
 
-        console.log(typeof(data.homeSum));
+
+        $("#date").text(info.date);
 
         chart.push(data.next(data.homeSum));
       });
@@ -52,6 +60,9 @@
       }
 
       setInterval(updateChart, 1000);
+
+
+
 
 
 
