@@ -1,22 +1,79 @@
 <!doctype html>
 <html>
   <head>
-    <title>Dashboard</title>
+    <title>MLS Dashboard</title>
     
+    <meta charset="utf-8">
+
+    <meta name="author" content="Ashley Yarris">
+    
+    <link rel="stylesheet" type="text/css" href="style/epoch.css">
+    <link rel="stylesheet" type="text/css" href="style/styles.css">
   </head>
   <body>
     
 
-    <div id="example"></div>
-    <p id="date"></p>
-    <p style="font-size:3em;" id="homes-sold-number"></p>
-    <p style="font-size:3em;" id="homes-sold-dollar"></p>
-    <div id="realtime-chart" class="epoch" style="height: 200px"></div>
+    <div>
+      <!-- frame 1-->
+      <div class="frame">
+        <div id="blue">
+          <h1>Current Housing Statistics</h1>
+          <div id="statframe">
+
+          <table>
+            <tr>
+              <td><h3>Homes<br />Sold</h3></td>
+              <td><div id="box1"></div></td>
+              <td><div id="stat1"></div></td>
+            </tr>
+            <tr>
+              <td><h3>Value</h3></td>
+              <td><div id="box2"></div></td>
+              <td><div id="stat2"></div></td>
+            </tr>
+            <tr>
+              <td><h3>Homes<br />Listed</h3></td>
+              <td><div id="box3"></div></td>
+              <td><div id="stat3"></div></td>
+            </tr>
+            <tr>
+              <td><h3>Value</h3></td>
+              <td><div id="box4"></div></td>
+              <td><div id="stat4"></div></td>
+            </tr>
+          </table>  
+      
+          </div>
+        </div>
+           <div id="mbym">
+            <h2>Minute by Minute</h2>
+              <div id="realtime-chart"></div> 
+           </div>
+            <div class="clr"></div> 
+      </div>
+      <!-- end frame 1-->
+      <!-- frame 2-->   
+      <div class="frame" id="frameleft">
+        <h2>Median Home Price</h2>
+        <div id="piechart"></div>
+      </div>
+      
+      <!-- frame 3--> 
+      <div class="frame" id="frameright">
+      <h2>Average Days on Market</h2>
+      <div id="calendar">
+        <div id="days">
+          63
+        </div>
+      </div>  
+
+      </div>
+    </div>
 
     
 
 
-    <link rel="stylesheet" type="text/css" href="style/epoch.css">
+    <!-- scripts -->
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="scripts/d3.js"></script>
@@ -34,34 +91,70 @@
         data: data.history(),
         axes: ['left', 'bottom', 'right']
       });
-      var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',')
+      var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',');
 
-      // push updated RETS data through socket.io
-      socket.on('update', function(info){
-        data.homeSum = info.sum;
+      // push updated sold data
+      socket.on('soldUpdate', function(info){
+        //$("#date").text(info.date);
+        console.log(info);
 
-        $("#homes-sold-number").text(info.homesSold + " homes sold");
-                
-        $('#homes-sold-dollar').animateNumber(
-          {
-            number: data.homeSum,
-            numberStep: comma_separator_number_step
-          }
-        );
+        if (data.soldSum != info.soldSum) {
+          $("#stat1").animateNumber(
+            {
+            number: info.homesSold
+            },
+            2000
+          );
 
+          $('#stat2').animateNumber(
+            {
+              number: info.soldSum,
+              numberStep: comma_separator_number_step
+            },
+            2500
+          );
+          chart.push(data.next(info.soldSum));
+        
+          data.homesSold = info.homesSold;
+          data.soldSum = info.soldSum;
+        } 
 
-        $("#date").text(info.date);
-
-        chart.push(data.next(data.homeSum));
+        
       });
 
+      // push updated listing data
+      socket.on('listedUpdate', function(info){
+
+        console.log(info);
+        if (data.listedSum != info.listedSum) {
+          $("#stat3").animateNumber(
+            {
+            number: info.listedSold
+            },
+            2000
+          );
+
+          $('#stat4').animateNumber(
+            {
+              number: info.listedSum,
+              numberStep: comma_separator_number_step
+            },
+            2500
+          );
+        
+          data.listedSold = info.listedSold;
+          data.listedSum = info.listedSum;
+        } 
+
+        
+      });
+
+      // update chart with most recently pulled data
       function updateChart () {
-        chart.push(data.next(data.homeSum));
+        chart.push(data.next(data.soldSum));
       }
 
       setInterval(updateChart, 1000);
-
-
 
 
 

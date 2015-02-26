@@ -49,7 +49,7 @@ module.exports = {
 
                 fields = table.Fields;
 
-                // Pass resource, class, and DQML query, get all residential homes sold today
+                // Homes sold today
                 client.query("Property", "RESI", soldQuery, function(error, data) {
                     var dailyHomesTotal = [];
 
@@ -69,13 +69,41 @@ module.exports = {
                     var dailyHomesSold = data.length;
 
                     // attach them to a data object
-                    var data = {}
-                    data.sum = sum;
-                    data.homesSold = dailyHomesSold;
-                    data.date = retsDate;
+                    var homeData = {}
+                    homeData.soldSum = sum;
+                    homeData.homesSold = dailyHomesSold;
+                    homeData.date = retsDate;
 
                     // broadcast it as a websocket 'update' event
-                    io.emit('update', data);
+                    io.emit('soldUpdate', homeData);
+                });
+
+                // Homes listed today
+                client.query("Property", "RESI", listedQuery, function(error, data) {
+                    var dailyHomesTotal = [];
+
+                    if (error) {
+                        console.log(error);
+                        return;
+                    }
+
+                    // Iterate through search results, print out the list prices and add 'em up. 
+                    for(var dataItem = 0; dataItem < data.length; dataItem++) {
+                        var homePrice = parseInt(data[dataItem]["CurrentPrice"], 10);
+                        dailyHomesTotal.push(homePrice);
+                    }
+
+                    // Calculate desired Metrics
+                    var sum = dailyHomesTotal.reduce(function(a, b) { return a + b });
+                    var dailyHomesSold = data.length;
+
+                    // attach them to a data object
+                    var homeData = {}
+                    homeData.listedSum = sum;
+                    homeData.listedSold = dailyHomesSold;
+
+                    // broadcast it as a websocket 'update' event
+                    io.emit('listedUpdate', homeData);
                 });
 
             });

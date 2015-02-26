@@ -1,0 +1,117 @@
+body {
+background: #e5e6e6;
+font-family: 'Gotham'; 
+font-weight: 400; 
+font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Gotham';
+	font-style: normal; 
+	text-transform: uppercase;
+}
+h1{
+color: #fff;
+font-weight: 700; 
+padding: 20px 15px 0px 15px;
+font-size: 20px;
+}
+
+h2{
+color: #009ad9;
+font-weight: 700; 
+padding: 0px 15px 0px 15px;
+font-size: 25px;
+}
+
+h3{
+color: #fff;
+font-weight: 400; 
+padding: 0px 15px 0px 15px;
+font-size: 13px;
+float: left;
+}
+
+
+
+.clr {clear:both;}
+
+.frame {
+	background: #fff;
+	padding: 1px 15px 15px 15px;
+	margin: 10px;
+}
+
+#frameleft{
+	float:left;
+	width: 465px;
+}
+
+#frameright{
+	float:right;
+	width: 465px;
+}
+#blue{
+ background: #009bd9;
+ width: 380px;
+ float: left;
+}
+
+#mbym {
+	float: right;
+}
+
+#statframe{
+	padding: 5px 20px 10px 48px;
+}
+
+#box1 {
+	width: 20px;
+	height: 20px;
+	background: #f06922;
+}
+
+#box2 {
+	width: 20px;
+	height: 20px;
+	background: #55b847;
+}
+
+#box3 {
+	width: 20px;
+	height: 20px;
+	background: #922689;
+}
+
+#box4 {
+	width: 20px;
+	height: 20px;
+	background: #d8ab27;
+}
+
+
+#stat1, #stat2, #stat3, #stat4 {
+clear: right;
+font-size: 37px;
+color: #fff;
+margin-left: 20px;
+}
+
+
+#calendar{
+	background-image: url('../images/cal.jpg');
+	width: 170px;
+	height: 170px;
+	margin-right: auto;
+	margin-left: auto;
+	padding: 0 0 20px 0;
+	background-repeat: no-repeat; 
+}
+
+#days{
+font-size: 96px;
+color:#fff;
+font-weight: 700;
+padding: 39px 0px 0px 23px;
+}
+
