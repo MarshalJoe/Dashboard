@@ -89,14 +89,27 @@ float: left;
 	background: #d8ab27;
 }
 
+.dollar {
+	font-size: 37px;
+	color: #fff;
+	margin:0;
+	display: inline-block;
+	margin-left: 15px;
+	margin-right: 2px;
+}
+
+
 
 #stat1, #stat2, #stat3, #stat4 {
 clear: right;
 font-size: 37px;
 color: #fff;
-margin-left: 20px;
+display:inline-block;
 }
 
+#stat1, #stat3 {
+	margin-left: 15px;
+}
 
 #calendar{
 	background-image: url('../images/cal.jpg');

@@ -27,9 +27,9 @@
               <td><div id="stat1"></div></td>
             </tr>
             <tr>
-              <td><h3>Value</h3></td>
+              <td><h3>Sold<br/>Value</h3></td>
               <td><div id="box2"></div></td>
-              <td><div id="stat2"></div></td>
+              <td><div class="dollar">$</div><div id="stat2"></div></td>
             </tr>
             <tr>
               <td><h3>Homes<br />Listed</h3></td>
@@ -37,9 +37,9 @@
               <td><div id="stat3"></div></td>
             </tr>
             <tr>
-              <td><h3>Value</h3></td>
+              <td><h3>Listed<br/>Value</h3></td>
               <td><div id="box4"></div></td>
-              <td><div id="stat4"></div></td>
+              <td><div class="dollar">$</div><div id="stat4"></div></td>
             </tr>
           </table>  
       
@@ -116,7 +116,10 @@
         
           data.homesSold = info.homesSold;
           data.soldSum = info.soldSum;
-        } 
+        
+        }
+
+
 
         
       });
