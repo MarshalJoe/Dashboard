@@ -96,22 +96,21 @@
       // push updated sold data
       socket.on('soldUpdate', function(info){
         //$("#date").text(info.date);
-        console.log(info);
 
         if (data.soldSum != info.soldSum) {
-          $("#stat1").animateNumber(
+          $("#stat1").prop('number', data.homesSold).animateNumber(
             {
             number: info.homesSold
             },
-            2000
+            3000
           );
 
-          $('#stat2').animateNumber(
+          $('#stat2').prop('number', data.soldSum).animateNumber(
             {
               number: info.soldSum,
               numberStep: comma_separator_number_step
             },
-            2500
+            3500
           );
           chart.push(data.next(info.soldSum));
         
@@ -125,21 +124,20 @@
       // push updated listing data
       socket.on('listedUpdate', function(info){
 
-        console.log(info);
         if (data.listedSum != info.listedSum) {
-          $("#stat3").animateNumber(
+          $("#stat3").prop('number', data.listedSold).animateNumber(
             {
             number: info.listedSold
             },
-            2000
+            3000
           );
 
-          $('#stat4').animateNumber(
+          $('#stat4').prop('number', data.listedSum).animateNumber(
             {
               number: info.listedSum,
               numberStep: comma_separator_number_step
             },
-            2500
+            3500
           );
         
           data.listedSold = info.listedSold;
