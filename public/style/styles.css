@@ -14,22 +14,22 @@ h1{
 color: #fff;
 font-weight: 700; 
 padding: 20px 15px 0px 15px;
-font-size: 20px;
+font-size: 18px;
 }
 
-h2{
-color: #009ad9;
-font-weight: 700; 
-padding: 0px 15px 0px 15px;
-font-size: 25px;
+h2	{
+	color: #009ad9;
+	font-weight: 700; 
+	padding: 0px 15px 0px 15px;
+	font-size: 25px;
 }
 
-h3{
-color: #fff;
-font-weight: 400; 
-padding: 0px 15px 0px 15px;
-font-size: 13px;
-float: left;
+h3	{
+	color: #fff;
+	font-weight: 400; 
+	padding: 0px 15px 0px 15px;
+	font-size: 13px;
+	float: left;
 }
 
 
@@ -53,7 +53,8 @@ float: left;
 }
 #blue{
  background: #009bd9;
- width: 380px;
+ height: 350px;
+ width: 440px;
  float: left;
 }
 
@@ -121,11 +122,15 @@ display:inline-block;
 	background-repeat: no-repeat; 
 }
 
+#date {
+	display: inline-block;
+}
+
 #days{
-font-size: 96px;
-color:#fff;
-font-weight: 700;
-padding: 39px 0px 0px 23px;
+	font-size: 96px;
+	color:#fff;
+	font-weight: 700;
+	padding: 39px 0px 0px 23px;
 }
 
 .my-chart {
@@ -139,4 +144,9 @@ padding: 39px 0px 0px 23px;
 
 #realtime-chart .layer-2 {
 	fill:#d8ab27;
+}
+
+@font-face {
+font-family: Gotham;
+src: url("style/public/fonts/Gotham-Book.otf") format("opentype");
 }

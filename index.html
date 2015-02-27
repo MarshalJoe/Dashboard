@@ -17,7 +17,7 @@
       <!-- frame 1-->
       <div class="frame">
         <div id="blue">
-          <h1>Current Housing Statistics</h1>
+          <h1>Current Housing Statistics <div id="date"></div></h1>
           <div id="statframe">
 
           <table>
@@ -89,13 +89,13 @@
       var chart = $('#realtime-chart').epoch({
         type: 'time.bar',
         data: data.history(),
-        axes: ['left', 'bottom', 'right']
+        axes: ['left']
       });
       var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',');
 
       // push updated sold data
       socket.on('soldUpdate', function(info){
-        //$("#date").text(info.date);
+        $("#date").text(info.date);
 
         if (data.soldSum != info.soldSum) {
           $("#stat1").prop('number', data.homesSold).animateNumber(
