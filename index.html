@@ -47,7 +47,7 @@
         </div>
            <div id="mbym">
             <h2>Minute by Minute</h2>
-              <div id="realtime-chart"></div> 
+              <div id="realtime-chart" class="epoch my-chart"></div> 
            </div>
             <div class="clr"></div> 
       </div>
@@ -85,9 +85,9 @@
 
       // script globals
       var socket = io();
-      var data = new RealTimeData(1);
+      var data = new RealTimeData();
       var chart = $('#realtime-chart').epoch({
-        type: 'time.area',
+        type: 'time.bar',
         data: data.history(),
         axes: ['left', 'bottom', 'right']
       });
@@ -112,7 +112,7 @@
             },
             3500
           );
-          chart.push(data.next(info.soldSum));
+          chart.push(data.next(info.soldSum, data.listedSum));
         
           data.homesSold = info.homesSold;
           data.soldSum = info.soldSum;
@@ -152,7 +152,7 @@
 
       // update chart with most recently pulled data
       function updateChart () {
-        chart.push(data.next(data.soldSum));
+        chart.push(data.next(data.soldSum, data.listedSum));
       }
 
       setInterval(updateChart, 1000);

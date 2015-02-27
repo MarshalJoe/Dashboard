@@ -9,7 +9,6 @@ module.exports = {
 
         // On successful RETS connection...
         client.once('connection.success', function() {
-            console.log("Pulling data from RETS server...");
 
             // Grab current date...
             var rawDate = new Date;

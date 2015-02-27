@@ -128,3 +128,15 @@ font-weight: 700;
 padding: 39px 0px 0px 23px;
 }
 
+.my-chart {
+	height: 280px;
+	width:750px;
+}
+
+#realtime-chart .layer-1 {
+	fill:#55b847;
+}
+
+#realtime-chart .layer-2 {
+	fill:#d8ab27;
+}
