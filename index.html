@@ -17,30 +17,43 @@
       <!-- frame 1-->
       <div class="frame">
         <div id="blue">
-          <h1>Current Housing Statistics <div id="date"></div></h1>
+          <h1>MLS Statistics</h1>
           <div id="statframe">
-
           <table>
-            <tr>
-              <td><h3>Homes<br />Sold</h3></td>
-              <td><div id="box1"></div></td>
-              <td><div id="stat1"></div></td>
-            </tr>
-            <tr>
-              <td><h3>Sold<br/>Value</h3></td>
-              <td><div id="box2"></div></td>
-              <td><div class="dollar">$</div><div id="stat2"></div></td>
-            </tr>
-            <tr>
-              <td><h3>Homes<br />Listed</h3></td>
-              <td><div id="box3"></div></td>
-              <td><div id="stat3"></div></td>
-            </tr>
-            <tr>
-              <td><h3>Listed<br/>Value</h3></td>
-              <td><div id="box4"></div></td>
-              <td><div class="dollar">$</div><div id="stat4"></div></td>
-            </tr>
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th>Today <div id="date"></div></th>
+                <th>This Week</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><h3>Homes<br />Sold</h3></td>
+                <td><div id="box1"></div></td>
+                <td><div id="stat1"></div></td>
+                <td><div id="weeklyStat1"></div></td>
+              </tr>
+              <tr>
+                <td><h3>Sold<br/>Value</h3></td>
+                <td><div id="box2"></div></td>
+                <td><div class="dollar">$</div><div id="stat2"></div></td>
+                <td><div class="dollar">$</div><div id="weeklyStat2"></div></td>
+              </tr>
+              <tr>
+                <td><h3>Homes<br />Listed</h3></td>
+                <td><div id="box3"></div></td>
+                <td><div id="stat3"></div></td>
+                <td><div id="weeklyStat3"></div></td>
+              </tr>
+              <tr>
+                <td><h3>Listed<br/>Value</h3></td>
+                <td><div id="box4"></div></td>
+                <td><div class="dollar">$</div><div id="stat4"></div></td>
+                <td><div class="dollar">$</div><div id="weeklyStat4"></div></td>
+              </tr>
+            </tbody>
           </table>  
       
           </div>
@@ -94,7 +107,7 @@
       var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',');
 
       // push updated sold data
-      socket.on('soldUpdate', function(info){
+      socket.on('soldUpdate', function (info){
         $("#date").text(info.date);
 
         if (data.soldSum != info.soldSum) {
@@ -118,14 +131,11 @@
           data.soldSum = info.soldSum;
         
         }
-
-
-
         
       });
 
       // push updated listing data
-      socket.on('listedUpdate', function(info){
+      socket.on('listedUpdate', function (info){
 
         if (data.listedSum != info.listedSum) {
           $("#stat3").prop('number', data.listedSold).animateNumber(
@@ -148,6 +158,57 @@
         } 
 
         
+      });
+
+      // push weekly sold data
+      socket.on('soldUpdateWeekly', function (info){
+        console.log(info);
+        if (data.soldWeeklySum != info.soldWeeklySum) {
+          $("#weeklyStat1").prop('number', data.homesWeeklySold).animateNumber(
+            {
+            number: info.homesWeeklySold
+            },
+            3000
+          );
+
+          $('#weeklyStat2').prop('number', data.soldWeeklySum).animateNumber(
+            {
+              number: info.soldWeeklySum,
+              numberStep: comma_separator_number_step
+            },
+            3500
+          );
+        
+        
+          data.homesWeeklySold = info.homesWeeklySold;
+          data.soldWeeklySum = info.soldWeeklySum;
+        
+        }
+        
+      });
+
+      // push weekly listing data
+      socket.on('listedUpdateWeekly', function (info) {
+        console.log(info);
+        if (data.listedWeeklySum != info.listedWeeklySum) {
+          $("#weeklyStat3").prop('number', data.listedWeeklySold).animateNumber(
+            {
+            number: info.listedWeeklySold
+            },
+            3000
+          );
+
+          $('#weeklyStat4').prop('number', data.listedWeeklySum).animateNumber(
+            {
+              number: info.listedWeeklySum,
+              numberStep: comma_separator_number_step
+            },
+            3500
+          );
+        
+          data.listedWeeklySold = info.listedWeeklySold;
+          data.listedWeeklySum = info.listedWeeklySum;
+        } 
       });
 
       // update chart with most recently pulled data

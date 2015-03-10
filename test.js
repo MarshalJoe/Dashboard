@@ -16,6 +16,7 @@ io.on('connection', function(socket) {
 
 function updateStats () {
 	rets.pullDaily(io);
+	rets.pullWeekly(io);
 }
 
 setInterval(updateStats, 3000);
